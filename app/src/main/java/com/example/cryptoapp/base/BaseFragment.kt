@@ -1,6 +1,6 @@
 package com.example.cryptoapp.base
-
 import android.os.Bundle
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +9,16 @@ import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import java.lang.IllegalArgumentException
 
-abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(private val bindingInflater: (inflater: LayoutInflater) -> VB) :
-    Fragment() {
+abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
+    private val bindingInflater: (inflater: LayoutInflater) -> VB
+) : Fragment() {
 
     private var _binding: VB? = null
     protected val binding: VB get() = _binding as VB
 
     protected abstract val viewModel: VM
     protected abstract fun onCreateFinished()
-    protected abstract fun initializeListener()
+    protected abstract fun initializeListeners()
     protected abstract fun observeEvents()
 
     override fun onCreateView(
@@ -25,14 +26,11 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(private val bindin
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = bindingInflater.invoke(inflater)
 
         if (_binding == null) {
-            throw IllegalArgumentException("Binding Null")
+            throw IllegalArgumentException("Binding null")
         }
-
-
 
         return binding.root
     }
@@ -40,17 +38,12 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(private val bindin
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onCreateFinished()
-        initializeListener()
+        initializeListeners()
         observeEvents()
-
-
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

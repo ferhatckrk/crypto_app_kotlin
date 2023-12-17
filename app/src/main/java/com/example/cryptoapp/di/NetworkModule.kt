@@ -1,6 +1,7 @@
 package com.example.cryptoapp.di
 
 import android.content.pm.ApplicationInfo
+import com.example.cryptoapp.BuildConfig
 import com.example.cryptoapp.network.ApiFactory
 import com.example.cryptoapp.utils.Constants.BASE_URL
 import dagger.Module
@@ -24,7 +25,7 @@ object NetworkModule {
     @Provides
     fun provideHttpLoggerInterceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
-        if (ApplicationInfo.FLAG_DEBUGGABLE.equals(0)) {
+        if (BuildConfig.DEBUG) {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         } else {

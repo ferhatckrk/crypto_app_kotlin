@@ -1,3 +1,5 @@
+package com.example.cryptoapp.base
+
 import com.example.cryptoapp.model.errorResponse.ErrorResponse
 import com.example.cryptoapp.utils.NetworkResult
 import com.google.gson.Gson
@@ -6,7 +8,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.lang.Exception
 
-/** Created by @Emre Özcan on 18.04.2022 */
+
 abstract class BaseRepository {
 
     suspend fun <T> safeApiRequest(
